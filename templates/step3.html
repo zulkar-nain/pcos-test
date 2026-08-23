@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Set 3: Symptoms & Lifestyle{% endblock %}
+{% block progress %}
+  <div class="progress">
+    <span class="step done">1</span>
+    <span class="step done">2</span>
+    <span class="step active">3</span>
+  </div>
+{% endblock %}
+{% block content %}
+  <h2>Set 3 &mdash; Symptoms &amp; Lifestyle</h2>
+  <form method="post">
+    {% for name, question in [
+      ("weight_gain", "Have you noticed recent, unexplained weight gain?"),
+      ("hair_growth", "Do you have excess facial/body hair growth (hirsutism)?"),
+      ("skin_darkening", "Do you have darkening of skin (neck, armpits, groin)?"),
+      ("hair_loss", "Have you experienced noticeable hair thinning or loss?"),
+      ("pimples", "Do you get frequent acne/pimples?"),
+      ("fast_food", "Do you eat fast food frequently?"),
+      ("reg_exercise", "Do you exercise regularly?"),
+    ] %}
+    <label>{{ question }}</label>
+    <div class="radio-group">
+      <label class="radio"><input type="radio" name="{{ name }}" value="yes" required> Yes</label>
+      <label class="radio"><input type="radio" name="{{ name }}" value="no"> No</label>
+    </div>
+    {% endfor %}
+
+    <button type="submit" class="btn btn-primary">See My Result</button>
+  </form>
+{% endblock %}

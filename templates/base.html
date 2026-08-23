@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}PCOS Risk Screening{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="page">
+    <header class="site-header">
+      <h1>PCOS Risk Screening</h1>
+      <p class="subtitle">A quick, educational self-assessment &mdash; not a medical diagnosis.</p>
+    </header>
+
+    {% block progress %}{% endblock %}
+
+    <main class="card">
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+      <p>This tool provides an estimate based on statistical patterns and cannot replace consultation with a doctor.</p>
+    </footer>
+  </div>
+</body>
+</html>

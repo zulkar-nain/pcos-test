@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}PCOS Risk Screening{% endblock %}
+{% block content %}
+  <h2>Know your PCOS risk</h2>
+  <p>
+    Polycystic Ovary Syndrome (PCOS) affects many women but often goes undiagnosed.
+    Answer 3 short sets of questions (about 2 minutes) covering your physical
+    measurements, menstrual history, and common symptoms to get an estimated
+    risk level.
+  </p>
+  <ul class="info-list">
+    <li>Set 1 &mdash; Physical measurements</li>
+    <li>Set 2 &mdash; Menstrual history</li>
+    <li>Set 3 &mdash; Symptoms &amp; lifestyle</li>
+  </ul>
+  <a class="btn btn-primary" href="{{ url_for('step1') }}">Start Screening</a>
+{% endblock %}

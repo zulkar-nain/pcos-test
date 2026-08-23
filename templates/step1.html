@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Set 1: Physical Measurements{% endblock %}
+{% block progress %}
+  <div class="progress">
+    <span class="step active">1</span>
+    <span class="step">2</span>
+    <span class="step">3</span>
+  </div>
+{% endblock %}
+{% block content %}
+  <h2>Set 1 &mdash; Physical Measurements</h2>
+  <form method="post">
+    <label for="age">Age (years)</label>
+    <input type="number" id="age" name="age" min="10" max="70" step="1" required>
+
+    <label for="weight_kg">Weight (kg)</label>
+    <input type="number" id="weight_kg" name="weight_kg" min="20" max="200" step="0.1" required>
+
+    <label for="height_cm">Height (cm)</label>
+    <input type="number" id="height_cm" name="height_cm" min="100" max="220" step="0.1" required>
+
+    <label for="waist_inch">Waist circumference (inches)</label>
+    <input type="number" id="waist_inch" name="waist_inch" min="15" max="60" step="0.1" required>
+
+    <label for="hip_inch">Hip circumference (inches)</label>
+    <input type="number" id="hip_inch" name="hip_inch" min="15" max="70" step="0.1" required>
+
+    <button type="submit" class="btn btn-primary">Next: Menstrual History</button>
+  </form>
+{% endblock %}

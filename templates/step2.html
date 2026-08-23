@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Set 2: Menstrual History{% endblock %}
+{% block progress %}
+  <div class="progress">
+    <span class="step done">1</span>
+    <span class="step active">2</span>
+    <span class="step">3</span>
+  </div>
+{% endblock %}
+{% block content %}
+  <h2>Set 2 &mdash; Menstrual History</h2>
+  <form method="post">
+    <label>Is your menstrual cycle regular?</label>
+    <div class="radio-group">
+      <label class="radio"><input type="radio" name="cycle_regularity" value="regular" required> Regular</label>
+      <label class="radio"><input type="radio" name="cycle_regularity" value="irregular"> Irregular</label>
+    </div>
+
+    <label for="cycle_length">How many days does your period (bleeding) usually last?</label>
+    <input type="number" id="cycle_length" name="cycle_length" min="1" max="15" step="1" required>
+
+    <button type="submit" class="btn btn-primary">Next: Symptoms &amp; Lifestyle</button>
+  </form>
+{% endblock %}
