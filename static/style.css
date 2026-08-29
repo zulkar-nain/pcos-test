@@ -170,3 +170,45 @@ form input[type="number"] {
   font-size: 0.8rem;
   margin-top: 1.5rem;
 }
+
+.privacy-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgba(51, 32, 43, 0.58);
+}
+
+.privacy-modal[hidden] {
+  display: none;
+}
+
+.privacy-modal__panel {
+  width: min(100%, 460px);
+  padding: 1.75rem;
+  border-radius: 10px;
+  background: var(--card-bg);
+  box-shadow: 0 16px 40px rgba(51, 32, 43, 0.28);
+}
+
+.privacy-modal__panel h2 {
+  margin-top: 0;
+  color: var(--primary-dark);
+}
+
+.privacy-modal__button {
+  width: 100%;
+  margin-top: 0.75rem;
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: 1.5rem;
+  }
+
+  .privacy-modal__panel {
+    padding: 1.5rem;
+  }
+}

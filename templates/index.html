@@ -1,6 +1,15 @@
 {% extends "base.html" %}
 {% block title %}PCOS Risk Screening{% endblock %}
 {% block content %}
+  <div class="privacy-modal" id="privacy-modal" role="dialog" aria-modal="true" aria-labelledby="privacy-title">
+    <div class="privacy-modal__panel">
+      <h2 id="privacy-title">Your answers stay private</h2>
+      <p>We do not collect, save, or share any information you enter in this screening.</p>
+      <p>Your answers are used only to calculate your result during this visit. They are cleared when you start over or close the page.</p>
+      <button class="btn btn-primary privacy-modal__button" type="button" id="privacy-acknowledge">I Understand</button>
+    </div>
+  </div>
+
   <h2>Know your PCOS risk</h2>
   <p>
     Polycystic Ovary Syndrome (PCOS) affects many women but often goes undiagnosed.
@@ -14,4 +23,9 @@
     <li>Set 3 &mdash; Symptoms &amp; lifestyle</li>
   </ul>
   <a class="btn btn-primary" href="{{ url_for('step1') }}">Start Screening</a>
+  <script>
+    document.getElementById("privacy-acknowledge").addEventListener("click", function () {
+      document.getElementById("privacy-modal").hidden = true;
+    });
+  </script>
 {% endblock %}
