@@ -1,5 +1,5 @@
 # Replace the app name with a globally unique name before your first deploy.
-app = "pcos-risk-screening-change-me"
+app = "pcos-risk-zulkar-2026"
 primary_region = "sin"
 
 [http_service]
