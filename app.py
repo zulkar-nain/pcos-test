@@ -8,14 +8,16 @@ logistic-regression model trained on self-reportable features only.
 This is an educational screening tool, NOT a medical diagnosis.
 """
 import os
+import secrets
 import joblib
 import pandas as pd
 from flask import Flask, render_template, request, session, redirect, url_for
 
 app = Flask(__name__)
-app.secret_key = os.environ.get("SECRET_KEY", "dev-secret-key-change-me")
+app.secret_key = os.environ.get("SECRET_KEY", secrets.token_hex(32))
 
-MODEL_PATH = os.path.join("model", "pcos_model.joblib")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(BASE_DIR, "model", "pcos_model.joblib")
 _bundle = joblib.load(MODEL_PATH)
 PIPELINE = _bundle["pipeline"]
 FEATURES = _bundle["features"]
@@ -30,6 +32,11 @@ def yn(value):
 def index():
     session.clear()
     return render_template("index.html")
+
+
+@app.route("/health")
+def health():
+    return {"status": "ok"}
 
 
 @app.route("/questions/1", methods=["GET", "POST"])
@@ -120,4 +127,4 @@ def result():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=80, debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)

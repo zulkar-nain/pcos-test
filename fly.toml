@@ -1,0 +1,18 @@
+# Replace the app name with a globally unique name before your first deploy.
+app = "pcos-risk-screening-change-me"
+primary_region = "sin"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ["app"]
+
+  [[http_service.checks]]
+    grace_period = "10s"
+    interval = "15s"
+    method = "GET"
+    timeout = "5s"
+    path = "/health"
