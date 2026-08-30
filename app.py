@@ -11,10 +11,18 @@ import json
 import math
 import os
 import secrets
-from flask import Flask, render_template, request, session, redirect, url_for
+from flask import Flask, render_template, request, session, redirect, url_for, Response
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", secrets.token_hex(32))
+
+SITE_URL = os.environ.get("SITE_URL", "https://testpcos.online")
+
+
+@app.context_processor
+def inject_site_url():
+    return {"site_url": SITE_URL}
+
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 WEIGHTS_PATH = os.path.join(BASE_DIR, "model", "model_weights.json")
@@ -50,6 +58,31 @@ def index():
 @app.route("/health")
 def health():
     return {"status": "ok"}
+
+
+@app.route("/robots.txt")
+def robots_txt():
+    lines = [
+        "User-agent: *",
+        "Allow: /",
+        "Disallow: /questions/",
+        "Disallow: /result",
+        f"Sitemap: {SITE_URL}/sitemap.xml",
+    ]
+    return Response("\n".join(lines), mimetype="text/plain")
+
+
+@app.route("/sitemap.xml")
+def sitemap_xml():
+    xml = f"""<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>{SITE_URL}/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>"""
+    return Response(xml, mimetype="application/xml")
 
 
 @app.route("/questions/1", methods=["GET", "POST"])

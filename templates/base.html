@@ -1,14 +1,80 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block title %}PCOS Risk Screening{% endblock %}</title>
+  <title>{% block title %}PCOS Risk Screening{% endblock %} | TestPCOS</title>
+
+  <meta name="description" content="{% block description %}Take a free, private, 3-step PCOS risk screening. Answer questions about physical measurements, menstrual history, and symptoms to get an instant estimated risk level.{% endblock %}">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="{{ site_url }}{% block canonical_path %}/{% endblock %}">
+
+  <!-- Open Graph / Facebook & Messenger preview -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="TestPCOS">
+  <meta property="og:title" content="{% block og_title %}PCOS Risk Screening{% endblock %}">
+  <meta property="og:description" content="{% block og_description %}Take a free, private, 3-step PCOS risk screening and get an instant estimated risk level.{% endblock %}">
+  <meta property="og:url" content="{{ site_url }}{% block og_path %}/{% endblock %}">
+  <meta property="og:image" content="{{ site_url }}{{ url_for('static', filename='images/social_banner.png') }}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="TestPCOS — Understand your PCOS risk with a free online assessment">
+  <meta property="og:locale" content="en_US">
+
+  <!-- Twitter card (also used by many link-preview bots) -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{% block twitter_title %}PCOS Risk Screening{% endblock %}">
+  <meta name="twitter:description" content="{% block twitter_description %}Take a free, private, 3-step PCOS risk screening and get an instant estimated risk level.{% endblock %}">
+  <meta name="twitter:image" content="{{ site_url }}{{ url_for('static', filename='images/social_banner.png') }}">
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='icons/favicon.svg') }}">
+  <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='icons/favicon.ico') }}">
+  <link rel="icon" type="image/png" sizes="96x96" href="{{ url_for('static', filename='icons/favicon-96x96.png') }}">
+  <link rel="apple-touch-icon" href="{{ url_for('static', filename='icons/apple-touch-icon.png') }}">
+  <link rel="manifest" href="{{ url_for('static', filename='icons/site.webmanifest') }}">
+  <meta name="theme-color" content="#33202b">
+
+  <!-- Structured data for search engines -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "TestPCOS - PCOS Risk Screening",
+    "url": "{{ site_url }}/",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Any",
+    "description": "A free, private, 3-step questionnaire that estimates PCOS (Polycystic Ovary Syndrome) risk for educational screening purposes.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Zulkar Nain",
+      "url": "https://zulkarnain.online"
+    }
+  }
+  </script>
+
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script>
+    // Applied before paint to avoid a light-mode flash on load.
+    (function () {
+      var saved = localStorage.getItem("theme");
+      if (saved === "light") {
+        document.documentElement.setAttribute("data-theme", "light");
+      }
+    })();
+  </script>
 </head>
 <body>
   <div class="page">
     <header class="site-header">
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle dark mode">
+        <span id="theme-toggle-icon">☀️</span>
+      </button>
       <h1>PCOS Risk Screening</h1>
       <p class="subtitle">A quick, educational self-assessment &mdash; not a medical diagnosis.</p>
     </header>
@@ -21,7 +87,34 @@
 
     <footer class="site-footer">
       <p>This tool provides an estimate based on statistical patterns and cannot replace consultation with a doctor.</p>
+      <p class="credit">Made with 💜 by <a href="https://zulkarnain.online" target="_blank" rel="noopener noreferrer">Zulkar Nain</a></p>
     </footer>
   </div>
+
+  <script>
+    (function () {
+      var toggle = document.getElementById("theme-toggle");
+      var icon = document.getElementById("theme-toggle-icon");
+
+      function updateIcon() {
+        var isLight = document.documentElement.getAttribute("data-theme") === "light";
+        icon.textContent = isLight ? "🌙" : "☀️";
+      }
+
+      toggle.addEventListener("click", function () {
+        var isLight = document.documentElement.getAttribute("data-theme") === "light";
+        if (isLight) {
+          document.documentElement.setAttribute("data-theme", "dark");
+          localStorage.setItem("theme", "dark");
+        } else {
+          document.documentElement.setAttribute("data-theme", "light");
+          localStorage.setItem("theme", "light");
+        }
+        updateIcon();
+      });
+
+      updateIcon();
+    })();
+  </script>
 </body>
 </html>
