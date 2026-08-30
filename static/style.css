@@ -37,6 +37,10 @@
 
 * { box-sizing: border-box; }
 
+html, body {
+  height: 100%;
+}
+
 body {
   margin: 0;
   font-family: "Segoe UI", Arial, sans-serif;
@@ -47,14 +51,18 @@ body {
 
 .page {
   max-width: 640px;
+  min-height: 100vh;
   margin: 0 auto;
-  padding: 2rem 1rem 3rem;
+  padding: 2rem 1rem 1.5rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .site-header {
   position: relative;
   text-align: center;
   margin-bottom: 1.5rem;
+  padding: 0 3rem;
 }
 
 .theme-toggle {
@@ -72,6 +80,25 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
+}
+
+@media (max-width: 480px) {
+  .site-header {
+    padding: 0 2.5rem;
+  }
+
+  .theme-toggle {
+    top: 0;
+    right: 0;
+    width: 2.1rem;
+    height: 2.1rem;
+    font-size: 0.95rem;
+  }
+
+  .site-header h1 {
+    font-size: 1.35rem;
+  }
 }
 
 .site-header h1 {
@@ -214,11 +241,13 @@ form input[type="number"] {
   text-align: center;
   color: var(--muted);
   font-size: 0.8rem;
-  margin-top: 1.5rem;
+  margin-top: auto;
+  padding-top: 1.5rem;
 }
 
 .site-footer .credit {
   margin-top: 0.4rem;
+  font-size: 0.7rem;
 }
 
 .site-footer .credit a {
@@ -238,7 +267,9 @@ form input[type="number"] {
   display: grid;
   place-items: center;
   padding: 1rem;
-  background: rgba(51, 32, 43, 0.58);
+  background: rgba(10, 6, 12, 0.78);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 }
 
 .privacy-modal[hidden] {
@@ -250,12 +281,18 @@ form input[type="number"] {
   padding: 1.75rem;
   border-radius: 10px;
   background: var(--card-bg);
-  box-shadow: 0 16px 40px rgba(51, 32, 43, 0.28);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+  text-align: center;
 }
 
 .privacy-modal__panel h2 {
   margin-top: 0;
   color: var(--primary-dark);
+  text-align: center;
+}
+
+.privacy-modal__panel p {
+  text-align: center;
 }
 
 .privacy-modal__button {
