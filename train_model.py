@@ -97,6 +97,22 @@ def main():
     joblib.dump({"pipeline": pipeline, "features": FEATURES}, MODEL_PATH)
     print(f"Saved model to {MODEL_PATH}")
 
+    # Export lightweight JSON weights for fast container startup without ML libs
+    scaler = pipeline.named_steps["scaler"]
+    clf = pipeline.named_steps["clf"]
+    import json
+    weights = {
+        "features": FEATURES,
+        "mean": scaler.mean_.tolist(),
+        "scale": scaler.scale_.tolist(),
+        "coef": clf.coef_[0].tolist(),
+        "intercept": float(clf.intercept_[0])
+    }
+    json_path = os.path.join(MODEL_DIR, "model_weights.json")
+    with open(json_path, "w") as f:
+        json.dump(weights, f, indent=2)
+    print(f"Saved lightweight weights to {json_path}")
+
 
 if __name__ == "__main__":
     main()

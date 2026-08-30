@@ -7,20 +7,33 @@ logistic-regression model trained on self-reportable features only.
 
 This is an educational screening tool, NOT a medical diagnosis.
 """
+import json
+import math
 import os
 import secrets
-import joblib
-import pandas as pd
 from flask import Flask, render_template, request, session, redirect, url_for
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", secrets.token_hex(32))
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-MODEL_PATH = os.path.join(BASE_DIR, "model", "pcos_model.joblib")
-_bundle = joblib.load(MODEL_PATH)
-PIPELINE = _bundle["pipeline"]
-FEATURES = _bundle["features"]
+WEIGHTS_PATH = os.path.join(BASE_DIR, "model", "model_weights.json")
+
+# Load lightweight model weights (instant startup, zero heavy dependencies)
+with open(WEIGHTS_PATH, "r") as f:
+    MODEL_WEIGHTS = json.load(f)
+
+FEATURES = MODEL_WEIGHTS["features"]
+
+
+def predict_pcos_risk(row: dict) -> float:
+    """Compute logistic regression probability directly using saved weights."""
+    z = MODEL_WEIGHTS["intercept"]
+    for i, feature in enumerate(FEATURES):
+        val = row[feature]
+        scaled = (val - MODEL_WEIGHTS["mean"][i]) / MODEL_WEIGHTS["scale"][i]
+        z += scaled * MODEL_WEIGHTS["coef"][i]
+    return 1.0 / (1.0 + math.exp(-z))
 
 
 def yn(value):
@@ -105,8 +118,7 @@ def result():
         "fast_food": session["fast_food"],
         "reg_exercise": session["reg_exercise"],
     }
-    X = pd.DataFrame([row], columns=FEATURES)
-    probability = float(PIPELINE.predict_proba(X)[0, 1])
+    probability = predict_pcos_risk(row)
     risk_percent = round(probability * 100, 1)
 
     if risk_percent >= 65:
