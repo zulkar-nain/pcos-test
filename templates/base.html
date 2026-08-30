@@ -3,6 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id={{ ga_measurement_id }}"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', '{{ ga_measurement_id }}');
+  </script>
+
   <title>{% block title %}PCOS Risk Screening{% endblock %} | TestPCOS</title>
 
   <meta name="description" content="{% block description %}Take a free, private, 3-step PCOS risk screening. Answer questions about physical measurements, menstrual history, and symptoms to get an instant estimated risk level.{% endblock %}">

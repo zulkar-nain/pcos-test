@@ -17,11 +17,12 @@ app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", secrets.token_hex(32))
 
 SITE_URL = os.environ.get("SITE_URL", "https://testpcos.online")
+GA_MEASUREMENT_ID = os.environ.get("GA_MEASUREMENT_ID", "G-2CLJG1YMBG")
 
 
 @app.context_processor
 def inject_site_url():
-    return {"site_url": SITE_URL}
+    return {"site_url": SITE_URL, "ga_measurement_id": GA_MEASUREMENT_ID}
 
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
